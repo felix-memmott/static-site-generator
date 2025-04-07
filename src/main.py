@@ -16,7 +16,7 @@ def main():
     generate_pages_recursive(base_path=get_args(), public_dir="./docs")
 def copy_static_to_public():
     static_dir = "static"
-    public_dir = "public"
+    public_dir = "docs"
 
     # Delete contents of public directory if it exists
     if os.path.exists(public_dir):
