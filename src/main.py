@@ -1,6 +1,6 @@
 import os
 import shutil
-
+import sys
 from textnode import TextNode
 from markdown_utils import extract_title
 from htmlnode import markdown_to_html_node
@@ -13,7 +13,7 @@ TEMPLATE_PATH = "./template.html"
 
 def main():
     copy_static_to_public()
-    generate_pages_recursive()
+    generate_pages_recursive(base_path=get_args(), public_dir="./docs")
 def copy_static_to_public():
     static_dir = "static"
     public_dir = "public"
@@ -46,6 +46,13 @@ def copy_static_to_public():
 
     # Start recursive copy from static to public
     copy_recursive(static_dir, public_dir)
+
+def get_args():
+    if(len(sys.argv) > 1):
+        return sys.argv[1]
+    else:
+        return  "/"
+
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import os
 from markdown_utils import extract_title
 from htmlnode import markdown_to_html_node
 
-def generate_pages_recursive(content_dir="./content", template_path="./template.html", public_dir="./public"):
+def generate_pages_recursive(content_dir="./content", template_path="./template.html", public_dir="./public", base_path="/"):
     # Walk through all directories under content_dir
     for root, dirs, files in os.walk(content_dir):
         # Check if index.md exists in current directory
@@ -25,5 +25,7 @@ def generate_pages_recursive(content_dir="./content", template_path="./template.
             title = extract_title(markdown)
             html = markdown_to_html_node(markdown).to_html()
             html = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
+            html = html.replace('href="/', f'href="{base_path}')
+            html = html.replace('src="/', f'src="{base_path}')
             open(html_output_path, "w").write(html)
     
